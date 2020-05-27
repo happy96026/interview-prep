@@ -3,28 +3,28 @@ from collections import Counter, deque
 import heapq
 
 class Solution:
-    #  def leastInterval(self, tasks: List[str], n: int) -> int:
-        #  '''
-        #  Min heap
-        #  '''
-        #  c = Counter(tasks)
-        #  heap = [-v for v in c.values()]
-        #  heapq.heapify(heap)
-        #  queue = deque()
-        #  currTime = 0
+    def leastInterval(self, tasks: List[str], n: int) -> int:
+        '''
+        Min heap
+        '''
+        c = Counter(tasks)
+        heap = [-v for v in c.values()]
+        heapq.heapify(heap)
+        queue = deque()
+        currTime = 0
 
-        #  while heap or queue:
-            #  if heap:
-                #  coolDownTask = heapq.heappop(heap) + 1
-                #  if coolDownTask:
-                    #  queue.append((coolDownTask, currTime + n))
+        while heap or queue:
+            if heap:
+                coolDownTask = heapq.heappop(heap) + 1
+                if coolDownTask:
+                    queue.append((coolDownTask, currTime + n))
 
-            #  if queue and queue[0][1] == currTime:
-                #  heapq.heappush(heap, queue.popleft()[0])
+            if queue and queue[0][1] == currTime:
+                heapq.heappush(heap, queue.popleft()[0])
 
-            #  currTime += 1
+            currTime += 1
 
-        #  return currTime
+        return currTime
 
     def leastInterval(self, tasks: List[str], n: int) -> int:
         '''
