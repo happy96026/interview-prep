@@ -1,9 +1,15 @@
 class Solution:
     def isIsomorphic(self, s: str, t: str) -> bool:
         d = {}
+        taken = set()
+
         for i in range(len(s)):
             if s[i] not in d:
+                if t[i] in taken:
+                    return False
                 d[s[i]] = t[i]
+                taken.add(t[i])
+
             elif d[s[i]] != t[i]:
                 return False
 
