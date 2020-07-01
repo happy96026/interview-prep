@@ -1,33 +1,25 @@
-import re
+from typing import List
 
 class Solution:
-    def __init__(self):
-        self.pattern = re.compile(r'^\s*[+-]?(\d+\.?\d*|\.\d+)(e[+-]?\d+)?\s*$')
+    def maxChange(self, m: List[List[int]]) -> int:
+        dp = [0] * len(m[0])
+        for i in range(len(m)):
+            dp[0] += m[i][0]
+            for j in range(1, len(m[0])):
+                dp[j] = max(dp[j - 1], dp[j]) + m[i][j]
 
-    def isNumber(self, s: str) -> bool:
-        return self.pattern.match(s)
+        return dp[-1]
 
 
 def main():
     s = Solution()
-    print(s.isNumber("1  "))
-    print(s.isNumber('1.'))
-    print(s.isNumber('.1'))
-    print(s.isNumber(''))
-    print(s.isNumber('0'))
-    print(s.isNumber(' 0.1'))
-    print(s.isNumber('abc'))
-    print(s.isNumber('1 a'))
-    print(s.isNumber('2e10'))
-    print(s.isNumber('-90e3'))
-    print(s.isNumber(' 1e'))
-    print(s.isNumber('e3'))
-    print(s.isNumber('6e-1'))
-    print(s.isNumber('99e2.5'))
-    print(s.isNumber('53.5e93'))
-    print(s.isNumber('--6'))
-    print(s.isNumber('-+3'))
-    print(s.isNumber('95a54e53'))
+    print(s.maxChange(
+        [
+            [0, 3, 0, 2],
+            [1, 2, 3, 3],
+            [6, 0, 3, 2]
+        ]
+    ))
 
 if __name__ == '__main__':
     main()

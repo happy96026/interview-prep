@@ -1,25 +1,26 @@
 from typing import List
 
 class Solution:
-    def maxChange(self, m: List[List[int]]) -> int:
-        dp = [0] * len(m[0])
-        for i in range(len(m)):
-            dp[0] += m[i][0]
-            for j in range(1, len(m[0])):
-                dp[j] = max(dp[j - 1], dp[j]) + m[i][j]
+    def sortedSquares(self, A: List[int]) -> List[int]:
+        A = [n * n for n in A]
 
-        return dp[-1]
+        res = []
+        i = 0
+        j = len(A) - 1
+        while i <= j:
+            if A[i] > A[j]:
+                res.append(A[i])
+                i += 1
+            else:
+                res.append(A[j])
+                j -= 1
 
+        return res[::-1]
 
 def main():
     s = Solution()
-    print(s.maxChange(
-        [
-            [0, 3, 0, 2],
-            [1, 2, 3, 3],
-            [6, 0, 3, 2]
-        ]
-    ))
+    print(s.sortedSquares([-4, -1, 0, 3, 10]))
+    print(s.sortedSquares([-7, -3, 2, 3, 11]))
 
 if __name__ == '__main__':
     main()
