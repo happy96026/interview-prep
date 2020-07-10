@@ -69,7 +69,32 @@ class BubbleSort(SortTest):
 
 class MergeSortTopDown(SortTest):
     def sort(self, nums):
-        pass
+        self.mergeSort(nums, 0, len(nums))
+
+    def mergeSort(self, nums, lo, hi):
+        if hi - lo > 1:
+            mid = (lo + hi) // 2
+
+            self.mergeSort(nums, lo, mid)
+            self.mergeSort(nums, mid, hi)
+
+            i, j = lo, mid
+            arr = []
+            while i < mid and j < hi:
+                if nums[i] < nums[j]:
+                    arr.append(nums[i])
+                    i += 1
+                else:
+                    arr.append(nums[j])
+                    j += 1
+            while i < mid:
+                arr.append(nums[i])
+                i += 1
+            while j < hi:
+                arr.append(nums[j])
+                j += 1
+
+            nums[lo:hi] = arr
 
 class MergeSortBottomUp(SortTest):
     def sort(self, nums):
@@ -77,11 +102,53 @@ class MergeSortBottomUp(SortTest):
 
 class QuickSortLomuto(SortTest):
     def sort(self, nums):
+        self.quickSort(nums, 0, len(nums) - 1)
         pass
+
+    def quickSort(self, nums, lo, hi):
+        if lo < hi:
+            pivot = self.partition(nums, lo, hi)
+            self.quickSort(nums, lo, pivot - 1)
+            self.quickSort(nums, pivot + 1, hi)
+
+    def partition(self, nums, lo, hi):
+        i = lo
+        for j in range(lo, hi):
+            if nums[j] < nums[hi]:
+                nums[i], nums[j] = nums[j], nums[i]
+                i += 1
+
+        nums[i], nums[hi] = nums[hi], nums[i]
+
+        return i
 
 class QuickSortHoare(SortTest):
     def sort(self, nums):
-        pass
+        self.quickSort(nums, 0, len(nums) - 1)
+
+    def quickSort(self, nums, lo, hi):
+        if lo < hi:
+            pivot = self.partition(nums, lo, hi)
+            self.quickSort(nums, lo, pivot)
+            self.quickSort(nums, pivot + 1, hi)
+
+    def partition(self, nums, lo, hi):
+        pivot = nums[(lo + hi) // 2]
+        i = lo
+        j = hi
+
+        while True:
+            while nums[i] < pivot:
+                i += 1
+            while nums[j] > pivot:
+                j -= 1
+
+            if i >= j:
+                return j
+
+            nums[i], nums[j] = nums[j], nums[i]
+            i += 1
+            j -= 1
 
 class HeapSort(SortTest):
     def sort(self, nums):
@@ -123,7 +190,15 @@ class HeapSort(SortTest):
 
 
 def main():
-    test_classes = [SelectionSort, InsertionSort, BubbleSort, HeapSort]
+    test_classes = [
+        SelectionSort, 
+        InsertionSort,
+        BubbleSort,
+        HeapSort, 
+        MergeSortTopDown, 
+        QuickSortLomuto, 
+        QuickSortHoare
+    ]
     tests = ['test_1', 'test_2', 'test_3', 'test_4', 'test_5']
     suite = unittest.TestSuite()
     for klass in test_classes:
