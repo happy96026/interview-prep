@@ -1,5 +1,14 @@
 import { expect } from '@jest/globals';
-import { quickSort } from './sort';
+import {
+    bubbleSort,
+    insertionSort,
+    selectionSort,
+    mergeSortTopDown,
+    mergeSortBottomUp,
+    quickSortLomuto,
+    quickSortHoare,
+    heapSort,
+} from './sort';
 
 function runTests(sortFn) {
     const testCases = [
@@ -11,11 +20,41 @@ function runTests(sortFn) {
     ];
 
     for (let i = 0; i < testCases.length; i++) {
-        const array = [...testCases[i]];
         test(`test case ${i}`, () => {
+            const array = [...testCases[i]];
             expect(sortFn([...array])).toEqual(array.sort((a, b) => a - b));
         });
     }
 }
 
-runTests(quickSort);
+describe('bubbleSort', () => {
+    runTests(bubbleSort);
+});
+
+describe('insertionSort', () => {
+    runTests(insertionSort);
+});
+
+describe('selectionSort', () => {
+    runTests(selectionSort);
+});
+
+describe('mergeSortTopDown', () => {
+    runTests(mergeSortTopDown);
+});
+
+describe('mergeSortBottomUp', () => {
+    runTests(mergeSortBottomUp);
+});
+
+describe('quickSortLomuto', () => {
+    runTests(quickSortLomuto);
+});
+
+describe('quickSortHoare', () => {
+    runTests(quickSortHoare);
+});
+
+describe('heapSort', () => {
+    runTests(heapSort);
+});
